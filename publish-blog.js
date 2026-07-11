@@ -263,20 +263,7 @@ async function verifyBufferAuth({ token }) {
   }
 }
 
-async function createIdea({ token, organizationId, title, text }) {
-  const query = `
-    mutation {
-      createIdea(input: {
-        organizationId: "${gqlString(organizationId)}",
-        content: {
-          title: "${gqlString(title)}",
-          text: "${gqlString(text)}"
-        }
-      }) {
-        ... on Idea { id content { title text } }
-        ... on BasicError { message }
-      }
-    }
+async function createIdea({ token, organizationId, title, text }) { const query = ` mutation { createIdea(input: { organizationId: "${gqlString(organizationId)}", content: { title: "${gqlString(title)}", text: "${gqlString(text)}" } }) { ... on Idea { id } } } `; const data = await bufferGraphQL({ token, query }); const idea = data && data.createIdea; if (!idea || !idea.id) throw new Error("Buffer createIdea failed to return an ID."); return { id: idea.id }; } 
   `;
   const data = await bufferGraphQL({ token, query });
   const idea = data && data.createIdea;
