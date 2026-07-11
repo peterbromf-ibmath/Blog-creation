@@ -256,7 +256,7 @@ function gqlString(s) {
 
 async function verifyBufferAuth({ token }) {
   try {
-    await bufferGraphQL({ token, query: `{ __typename }` });
+    await bufferGraphQL({ token, query: "{ user { id } }" });
     return { ok: true };
   } catch (e) {
     return { ok: false, error: e.message || String(e) };
