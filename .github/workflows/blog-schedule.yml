@@ -1,1 +1,0 @@
-name: Blog auto-poster on: workflow_dispatch: jobs: publish: runs-on: ubuntu-latest steps: - uses: actions/checkout@v4 
