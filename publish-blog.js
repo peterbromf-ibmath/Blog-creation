@@ -78,7 +78,12 @@ function gqlString(s) {
   return String(s || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
 }
 
-async function createDraft({ token, profileId, text }) { const query = ` mutation { createIdea(input: { organizationId: "${gqlString(process.env.BUFFER_ORG_ID)}", content: { text: "${gqlString(text)}" } }) { ... on IdeaResponse { idea { id } } } } `; const data = await bufferGraphQL({ token, query }); console.log("Buffer raw response:", JSON.stringify(data)); if (!data || !data.createIdea || !data.createIdea.idea) { throw new Error("Buffer createIdea returned an unexpected shape: " + JSON.stringify(data)); } return { id: data.createIdea.idea.id }; } 
+async function createDraft({ token, profileId, text }) { 
+  const query = ` mutation { createIdea(input: { organizationId: "${gqlString(process.env.BUFFER_ORG_ID)}", content: { text: "${gqlString(text)}" } }) { ... on IdeaResponse { idea { id } } } } `; 
+  const data = await bufferGraphQL({ token, query }); console.log("Buffer raw response:", JSON.stringify(data)); 
+  if (!data || !data.createIdea || !data.createIdea.idea) { 
+    throw new Error("Buffer createIdea returned an unexpected shape: " + JSON.stringify(data)); } 
+  return { id: data.createIdea.idea.id }; } 
 
 async function main() {
   const { BUFFER_ACCESS_TOKEN, BUFFER_PROFILE_ID, GEMINI_API_KEY } = process.env;
