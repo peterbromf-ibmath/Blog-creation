@@ -78,11 +78,7 @@ function gqlString(s) {
   return String(s || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
 }
 
-async function createDraft({ token, profileId, text }) {
-  const query = `mutation { createDraft(input: { profileId: "${gqlString(profileId)}", content: { text: "${gqlString(text)}" } }) { draft { id } } }`;
-  const data = await bufferGraphQL({ token, query });
-  return { id: data.createDraft.draft.id };
-}
+async function createDraft({ token, profileId, text }) { const query = ` mutation { createIdea(input: { organizationId: "${gqlString(process.env.BUFFER_ORG_ID)}", content: { text: "${gqlString(text)}" } }) { idea { id } } } `; const data = await bufferGraphQL({ token, query }); return { id: data.createIdea.idea.id }; }
 
 async function main() {
   const { BUFFER_ACCESS_TOKEN, BUFFER_PROFILE_ID, GEMINI_API_KEY } = process.env;
