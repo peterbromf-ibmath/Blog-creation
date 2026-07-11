@@ -46,6 +46,7 @@
 // -----------------------------------------------------------------------------
 // TOPIC ROTATION — kept verbatim from the Firebase version so the two
 // pipelines stay in lockstep. If you edit one, edit the other.
+// Update Buffer API types
 // -----------------------------------------------------------------------------
 const TOPIC_ROTATION = [
   // Product-line pillar posts (12 originals)
