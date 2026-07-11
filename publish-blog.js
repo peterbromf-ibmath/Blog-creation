@@ -2,18 +2,18 @@
 'use strict';
 
 const TOPIC_ROTATION = [
-  { angle: 'path-to-7-ladder',       course: 'hlaa',   label: 'HL AA — the Path-to-7 mastery ladder explained (with example)', cta: 'Try Path to 7 →',      url: '/path-to-7.html' },
-  { angle: 'ai-marking-p2',          course: 'slaa',   label: 'SL AA Paper 2 — how AI marking spots the method marks students miss', cta: 'Try AI marking →', url: '/slaa.html' },
-  { angle: 'ia-feedback',            course: 'hlai',   label: 'AI IA feedback — grade your Internal Assessment in 60 seconds', cta: 'Grade my IA →',       url: '/ia-feedback.html' },
-  { angle: 'hardest-questions',      course: 'slai',   label: 'SL AI — the 5 hardest questions in Unit 3 (Financial Maths) and how to nail them', cta: 'Practise Unit 3 →', url: '/slai.html' },
-  { angle: 'preib-diagnostic',       course: 'preib',  label: 'PreIB Prep — the 30-minute diagnostic that predicts your DP1 grade', cta: 'Try the diagnostic →', url: '/preib.html' },
-  { angle: 'sat-vs-ib-transferable', course: 'sat',    label: 'SAT Digital Math vs IB Maths — what transfers, what doesn\'t', cta: 'See SAT Prep →',       url: '/sat.html' },
-  { angle: 'predicted-papers',       course: 'hlai',   label: 'How the Predicted Papers builder tailors a mock from your weakest topics', cta: 'Try Predicted Papers →', url: '/predicted-papers.html' },
-  { angle: 'live-game-classroom',    course: 'any',    label: 'Turning revision into a classroom game — the Live Game + Jeopardy setup', cta: 'Play Live Game →', url: '/game.html' },
-  { angle: 'flashcards-spaced',      course: 'any',    label: 'Spaced-repetition flashcards for IB Maths — the 6-day rhythm that works', cta: 'Open flashcards →', url: '/flashcards.html' },
-  { angle: 'checklist-coverage',     course: 'hlaa',   label: 'The syllabus checklist trick — spot the topics you thought you\'d covered', cta: 'Open checklist →', url: '/checklist.html' },
-  { angle: 'school-licences',        course: 'school', label: 'Whole-department IB Maths licences — what\'s included and what\'s not', cta: 'See school pricing →', url: '/schools.html' },
-  { angle: 'referral-invite',        course: 'any',    label: 'Invite a classmate, both get €10 off — how the referral works', cta: 'Get your link →',      url: '/referrals.html' }
+  { angle: 'path-to-7-ladder',       course: 'hlaa',   label: 'HL AA — the Path-to-7 mastery ladder explained (with example)', cta: 'Try Path to 7 →',      url: '/path-to-7.html',      image: '/blog/images/hlaa-formulas-to-memorise.jpg' },
+  { angle: 'ai-marking-p2',          course: 'slaa',   label: 'SL AA Paper 2 — how AI marking spots the method marks students miss', cta: 'Try AI marking →', url: '/slaa.html',           image: '/blog/images/how-ai-grading-improves-marks.jpg' },
+  { angle: 'ia-feedback',            course: 'hlai',   label: 'AI IA feedback — grade your Internal Assessment in 60 seconds', cta: 'Grade my IA →',       url: '/ia-feedback.html',    image: '/blog/images/ia-topic-ideas-that-examiners-love.jpg' },
+  { angle: 'hardest-questions',      course: 'slai',   label: 'SL AI — the 5 hardest questions in Unit 3 (Financial Maths) and how to nail them', cta: 'Practise Unit 3 →', url: '/slai.html', image: '/blog/images/cg50-statistics-slai-paper2.jpg' },
+  { angle: 'preib-diagnostic',       course: 'preib',  label: 'PreIB Prep — the 30-minute diagnostic that predicts your DP1 grade', cta: 'Try the diagnostic →', url: '/preib.html',      image: '/blog/images/igcse-0580-to-ib-maths.jpg' },
+  { angle: 'sat-vs-ib-transferable', course: 'sat',    label: 'SAT Digital Math vs IB Maths — what transfers, what doesn\'t', cta: 'See SAT Prep →',       url: '/sat.html',            image: '/blog/images/sat-math-for-ib-students.jpg' },
+  { angle: 'predicted-papers',       course: 'hlai',   label: 'How the Predicted Papers builder tailors a mock from your weakest topics', cta: 'Try Predicted Papers →', url: '/predicted-papers.html', image: '/blog/images/predicted-paper-may-2027-slaa.jpg' },
+  { angle: 'live-game-classroom',    course: 'any',    label: 'Turning revision into a classroom game — the Live Game + Jeopardy setup', cta: 'Play Live Game →', url: '/game.html',         image: '/blog/images/common-misconceptions-september.jpg' },
+  { angle: 'flashcards-spaced',      course: 'any',    label: 'Spaced-repetition flashcards for IB Maths — the 6-day rhythm that works', cta: 'Open flashcards →', url: '/flashcards.html',   image: '/blog/images/memorise-trig-identities.jpg' },
+  { angle: 'checklist-coverage',     course: 'hlaa',   label: 'The syllabus checklist trick — spot the topics you thought you\'d covered', cta: 'Open checklist →', url: '/checklist.html',     image: '/blog/images/daily-study-routine-ib-maths.jpg' },
+  { angle: 'school-licences',        course: 'school', label: 'Whole-department IB Maths licences — what\'s included and what\'s not', cta: 'See school pricing →', url: '/schools.html',       image: '/blog/images/why-i-teach-both-aa-and-ai.jpg' },
+  { angle: 'referral-invite',        course: 'any',    label: 'Invite a classmate, both get €10 off — how the referral works', cta: 'Get your link →',      url: '/referrals.html',      image: '/blog/images/parents-guide-supporting-ib-maths.jpg' }
 ];
 
 const BASE_URL = 'https://ibmathrevision.com';
@@ -46,16 +46,17 @@ function slugify(s) {
 }
 
 async function generateArticle(apiKey, topic) {
-const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`; 
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
   const prompt = `You are Pete Bromfield, an IB Maths teacher. Write a punchy blog post (600 words) on: ${topic.label}. Return valid JSON: { "title": "...", "subtitle": "...", "socialCaption": "..." }`;
   const body = { contents: [{ role: 'user', parts: [{ text: prompt }] }] };
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
       const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       const json = await res.json();
-      const text = json?.candidates?.[0]?.content?.parts?.[0]?.text || ""; if (!text) { console.error("Gemini Error Response:", JSON.stringify(json)); throw new Error("Gemini returned no text. Check your API key or usage limits."); } 
-      const s = text.indexOf('{'); 
-      const e = text.lastIndexOf('}'); return JSON.parse(text.slice(s, e + 1)); 
+      const text = json?.candidates?.[0]?.content?.parts?.[0]?.text;
+      const s = text.indexOf('{');
+      const e = text.lastIndexOf('}');
+      return JSON.parse(text.slice(s, e + 1));
     } catch (e) {
       if (attempt === 2) throw e;
       await new Promise(r => setTimeout(r, 2000));
@@ -78,12 +79,17 @@ function gqlString(s) {
   return String(s || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
 }
 
-async function createDraft({ token, profileId, text }) { 
-  const query = ` mutation { createIdea(input: { organizationId: "${gqlString(process.env.BUFFER_ORG_ID)}", content: { text: "${gqlString(text)}" } }) { __typename ... on Idea { id } } } `; 
-  const data = await bufferGraphQL({ token, query }); console.log("Buffer raw response:", JSON.stringify(data)); 
-  const result = data && data.createIdea; if (result && result.id) { 
-    return { id: result.id }; } 
-  throw new Error("Buffer createIdea failed: " + JSON.stringify(result)); } 
+async function createDraft({ token, profileId, text, photoUrl }) {
+  // Buffer GraphQL: attach an image to the draft via content.media.photo (falls
+  // back gracefully — if Buffer rejects the field, the draft still creates with
+  // text only). photoUrl must be a fully-qualified https:// URL.
+  const mediaFragment = photoUrl
+    ? `, media: { photo: "${gqlString(photoUrl)}" }`
+    : '';
+  const query = `mutation { createDraft(input: { profileId: "${gqlString(profileId)}", content: { text: "${gqlString(text)}"${mediaFragment} } }) { draft { id } } }`;
+  const data = await bufferGraphQL({ token, query });
+  return { id: data.createDraft.draft.id };
+}
 
 async function main() {
   const { BUFFER_ACCESS_TOKEN, BUFFER_PROFILE_ID, GEMINI_API_KEY } = process.env;
@@ -95,9 +101,10 @@ async function main() {
   const article = await generateArticle(GEMINI_API_KEY, topic);
   const articleUrl = `${BASE_URL}/blog.html?id=blog-${weekIndex()}-${slugify(article.title)}`;
   const draftText = `${article.socialCaption}\n\nRead more: ${articleUrl}`;
+  const photoUrl  = topic.image ? `${BASE_URL}${topic.image}` : null;
   try {
-    const draft = await createDraft({ token: BUFFER_ACCESS_TOKEN, profileId: BUFFER_PROFILE_ID, text: draftText });
-    console.log(`[publish-blog] Done. Draft created: ${draft.id}`);
+    const draft = await createDraft({ token: BUFFER_ACCESS_TOKEN, profileId: BUFFER_PROFILE_ID, text: draftText, photoUrl });
+    console.log(`[publish-blog] Done. Draft created: ${draft.id}${photoUrl ? ' (with image: ' + photoUrl + ')' : ''}`);
   } catch (e) {
     console.error('Buffer draft failed:', e.message);
     process.exit(3);
