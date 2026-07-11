@@ -53,10 +53,9 @@ async function generateArticle(apiKey, topic) {
     try {
       const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       const json = await res.json();
-      const text = json?.candidates?.[0]?.content?.parts?.[0]?.text;
-      const s = text.indexOf('{');
-      const e = text.lastIndexOf('}');
-      return JSON.parse(text.slice(s, e + 1));
+      const text = json?.candidates?.[0]?.content?.parts?.[0]?.text || ""; if (!text) { console.error("Gemini Error Response:", JSON.stringify(json)); throw new Error("Gemini returned no text. Check your API key or usage limits."); } 
+      const s = text.indexOf('{'); 
+      const e = text.lastIndexOf('}'); return JSON.parse(text.slice(s, e + 1)); 
     } catch (e) {
       if (attempt === 2) throw e;
       await new Promise(r => setTimeout(r, 2000));
