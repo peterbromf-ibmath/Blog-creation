@@ -273,7 +273,7 @@ async function createIdea({ token, organizationId, title, text }) {
         }
       }) {
         ... on Idea { id content { title text } }
-        ... on UserError { message }
+        ... on BasicError { message }
       }
     }
   `;
