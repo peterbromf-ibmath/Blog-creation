@@ -79,11 +79,11 @@ function gqlString(s) {
 }
 
 async function createDraft({ token, profileId, text }) { 
-  const query = ` mutation { createIdea(input: { organizationId: "${gqlString(process.env.BUFFER_ORG_ID)}", content: { text: "${gqlString(text)}" } }) { ... on IdeaResponse { idea { id } } } } `; 
+  const query = ` mutation { createIdea(input: { organizationId: "${gqlString(process.env.BUFFER_ORG_ID)}", content: { text: "${gqlString(text)}" } }) { __typename ... on IdeaResponse { idea { id } } ... on BasicError { message } } } `; 
   const data = await bufferGraphQL({ token, query }); console.log("Buffer raw response:", JSON.stringify(data)); 
-  if (!data || !data.createIdea || !data.createIdea.idea) { 
-    throw new Error("Buffer createIdea returned an unexpected shape: " + JSON.stringify(data)); } 
-  return { id: data.createIdea.idea.id }; } 
+  const result = data && data.createIdea; if (result && result.idea) { 
+    return { id: result.idea.id }; } 
+  throw new Error("Buffer createIdea failed: " + JSON.stringify(result)); } 
 
 async function main() {
   const { BUFFER_ACCESS_TOKEN, BUFFER_PROFILE_ID, GEMINI_API_KEY } = process.env;
