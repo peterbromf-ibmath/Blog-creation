@@ -46,7 +46,7 @@ function slugify(s) {
 }
 
 async function generateArticle(apiKey, topic) {
-const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(apiKey)}`; 
+const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`; 
   const prompt = `You are Pete Bromfield, an IB Maths teacher. Write a punchy blog post (600 words) on: ${topic.label}. Return valid JSON: { "title": "...", "subtitle": "...", "socialCaption": "..." }`;
   const body = { contents: [{ role: 'user', parts: [{ text: prompt }] }] };
   for (let attempt = 1; attempt <= 2; attempt++) {
