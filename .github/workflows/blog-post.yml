@@ -1,1 +1,1 @@
-name: Blog Post on: workflow_dispatch: schedule: - cron: "0 9 * * 1,4" jobs: publish: runs-on: ubuntu-latest steps: - uses: actions/checkout@v4 - uses: actions/setup-node@v4 with: node-version: "20" - name: Run script env: BUFFER_ACCESS_TOKEN: $%7B%7B+secrets.BUFFER_ACCESS_TOKEN+%7D%7D BUFFER_PROFILE_ID: $%7B%7B+secrets.BUFFER_PROFILE_ID+%7D%7D GEMINI_API_KEY: $%7B%7B+secrets.GEMINI_API_KEY+%7D%7D run: node publish-blog.js 
+name: Blog Post on: workflow_dispatch:
