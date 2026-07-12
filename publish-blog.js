@@ -25,6 +25,8 @@ for (const a of argv) {
   else if (a.startsWith('--topic=')) args.topicIdx = parseInt(a.slice(8), 10);
 }
 
+const admin = require('firebase-admin'); function initFirebase() { if (admin.apps.length) return admin.app(); const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT); return admin.initializeApp({ credential: admin.credential.cert(serviceAccount), }); } 
+
 function weekIndex(date = new Date()) {
   const start = Date.UTC(2026, 0, 5);
   return Math.max(0, Math.floor((date.getTime() - start) / (7 * 24 * 3600 * 1000)));
@@ -90,6 +92,8 @@ async function createDraft({ token, profileId, text, photoUrl }) {
   const data = await bufferGraphQL({ token, query });
   return { id: data.createDraft.draft.id };
 }
+
+async function publishToFirestore({ documentId, title, subtitle, html, callToAction, callToActionUrl }) { initFirebase(); const db = admin.firestore(); await db.collection('blog_articles').doc(documentId).set({ title, subtitle, html, publishedAt: admin.firestore.FieldValue.serverTimestamp(), author: 'Pete Bromfield', callToAction: callToAction || 'Read more →', callToActionUrl: callToActionUrl || '/', }); } 
 
 async function main() {
   const { BUFFER_ACCESS_TOKEN, BUFFER_PROFILE_ID, GEMINI_API_KEY } = process.env;
